@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-size: 12px;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      b {
+        font-size: 14px;
+      }
+      p {
+        margin: 0 !important;
+      }
+      table {
+        width: 100%;
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <div class="container">
+      <form id="formId">
+        <div class="mb-3">
+          <label for="invoice_number" class="form-label">Invoice Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="invoice_number"
+            placeholder="FAILTN2200016981"
+            name="invoice_number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="order_id" class="form-label">Order ID</label>
+          <input
+            type="test"
+            placeholder="OD123005597885159000"
+            class="form-control"
+            id="order_id"
+            name="order_id"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="order_date" class="form-label">Order Date</label>
+          <input
+            type="date"
+            placeholder="03-10-2021"
+            class="form-control"
+            id="order_date"
+            name="order_date"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="cin_number" class="form-label">CIN Number</label>
+          <input
+            type="text"
+            placeholder="U52100HR2016PTC066517"
+            class="form-control"
+            id="cin_number"
+            name="cin_number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="customer_name" class="form-label">Customer Name</label>
+          <input
+            type="text"
+            placeholder="Avijit Samanta"
+            class="form-control"
+            id="customer_name"
+            name="customer_name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Customer Address</label>
+          <input
+            placeholder="Vill + P.O - Argora, ......."
+            class="form-control"
+            id="address"
+            name="address"
+            required
+            rows="3"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="mobile_name" class="form-label">Mobile Model Name</label>
+          <input
+            type="text"
+            placeholder="POCO M3 (Cool Blue, 64GB)"
+            class="form-control"
+            id="mobile_name"
+            name="mobile_name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="fsn_number" class="form-label">FSN Number</label>
+          <input
+            type="text"
+            placeholder="MOBG4CGF7NWAEVRK"
+            class="form-control"
+            id="fsn_number"
+            name="fsn_number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="imei_number" class="form-label">IMEI Number</label>
+          <input
+            type="text"
+            placeholder="860950055735398"
+            class="form-control"
+            id="imei_number"
+            name="imei_number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="gross_amount" class="form-label">Price</label>
+          <input
+            type="number"
+            placeholder="7899"
+            class="form-control"
+            id="gross_amount"
+            name="gross_amount"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      const form = document.getElementById("formId");
+      function addZeroes(num) {
+        const dec = num.split(".")[1];
+        const len = dec && dec.length > 2 ? dec.length : 2;
+        return Number(num).toFixed(len);
+      }
+      function submitForm(e) {
+        e.preventDefault();
+        let customer_name = document.getElementById("customer_name").value;
+        let address = document.getElementById("address").value;
+        let invoice_number = document.getElementById("invoice_number").value;
+        let order_id = document.getElementById("order_id").value;
+        let order_date = document.getElementById("order_date").value;
+        let cin_number = document.getElementById("cin_number").value;
+        let mobile_name = document.getElementById("mobile_name").value;
+        let fsn_number = document.getElementById("fsn_number").value;
+        let imei_number = document.getElementById("imei_number").value;
+        let gross_amount = document.getElementById("gross_amount").value;
+
+        let gst_number = "19AAXCS8821M1Z8";
+
+        let pan_card = "AAXCS8821M";
+
+        let imei_first = imei_number.substr(0, 11);
+        let imei_last4digit = imei_number.substr(11);
+
+        let gstAmount = gross_amount - gross_amount * (100 / (100 + 18));
+
+        gstAmount = Number(gstAmount.toFixed(2));
+
+        let tax_amount = gross_amount - gstAmount;
+
+        tax_amount = Number(tax_amount.toFixed(2));
+
+        gstAmount /= 2;
+
+        gstAmount = Number(gstAmount.toFixed(2));
+
+        gross_amount = addZeroes(gross_amount);
+        document.title = order_id.toUpperCase();
+
+        setTimeout(() => {}, 200);
+
+        let htmlText = `    <center><h3>Tax Invoice</h3></center>
+
+<div class="row">
+  <div class="col-9">
+    <b style="font-size: 14px"
+      >Sold By: Savadika Retail Private Limited ,</b
+    >
+    <p>
+      <b style="font-size: 10px"> Ship-from Address:</b>
+      <span style="font-size: 9px">
+        Instakart Services Private Limited, Plot No A1,, Haringhata
+        Industrial Park, District Nadia, West Bengal Pin- 741249, Nadia,
+        WEST BENGAL, India - 741249, IN-WB
+      </span>
+    </p>
+  </div>
+  <div class="col-3">
+    <img src="./qrcode.png" alt="" width="75" height="75" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <b>GSTIN </b
+    ><span class="text-uppercase">- ${gst_number} </span>
+  </div>
+  <div class="col-6">
+    <p
+      style="
+        border-width: 1px;
+        border-style: dotted;
+        border-color: black;
+        width: 300px;
+      "
+      class="px-1 mt-2"
+    >
+      <b>Invoice Number</b>
+      <span class="text-uppercase">
+        # ${invoice_number}
+      </span>
+    </p>
+  </div>
+</div>
+
+<div class="mt-2" style="border-top: 1.5px solid black" />
+
+<div class="row">
+  <div class="col-4">
+    <b>Order ID: <span class="text-uppercase"> ${order_id}</span></b>
+
+    <br />
+    <b>Order Date:</b>
+    <span>${order_date} </span>
+
+    <br />
+    <b>Invoice Date:</b>
+    <span>${order_date} </span>
+
+    <br />
+    <b>PAN:</b>
+    <span class="text-uppercase">${pan_card}</span>
+
+    <br />
+    <b>CIN:</b>
+    <span class="text-uppercase"
+      >${cin_number}</span
+    >
+  </div>
+  <div class="col-4">
+    <b>Bill To <br /><span>${customer_name}</span></b>
+    <br />
+    <p >
+      ${address}
+    </p>
+
+    <p>
+      Amarshi Kasba 721439 West Bengal
+      <br />
+      Phone: xxxxxxxxxx
+    </p>
+  </div>
+  <div class="col-4">
+    <b
+      >Ship To <br />
+      <span>${customer_name}</span></b
+    >
+    <br />
+    <p >
+      ${address}
+    </p>
+    <p>
+      Amarshi Kasba 721439 West Bengal
+      <br />
+      Phone: xxxxxxxxxx
+    </p>
+  </div>
+</div>
+
+<p class="mt-3">Total items: 1</p>
+<div style="border-top: 1.5px solid black" />
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Title</th>
+    <th>Qty</th>
+    <th>Gross Amount</th>
+    <th>Taxable Value</th>
+    <th>CGST</th>
+    <th>SGST</th>
+    <th>Total</th>
+  </tr>
+
+  <tr style="border-bottom: 1.5px solid black" />
+
+  <tr>
+    <td>
+      Handsets FSN:
+      <span class="text-uppercase"> ${fsn_number} </span>
+      <br />
+      HSN/SAC: 85171211
+    </td>
+    <td>
+      <b >${mobile_name}</b>
+      <p style="font-size: 10px">
+        Warranty: One Year Warranty for Handset, 6 Months for Accessories
+      </p>
+      <p>
+        1. [IMEI/Serial No:
+        <span style="font-size: 14px">${imei_first}</span
+        ><b >${imei_last4digit}</b>]
+      </p>
+      <b style="font-size: 12px">CGST:</b> 9.0 %
+      <b style="font-size: 12px">
+        <br />
+        SGST/UTGST:</b
+      >
+      9.0 %
+    </td>
+    <td>1</td>
+    <td>&#8377;<span >${gross_amount}</span></td>
+    <td>&#8377;<span >${tax_amount}</span></td>
+    <td>&#8377;<span >${gstAmount}</span></td>
+    <td>&#8377;<span >${gstAmount}</span></td>
+    <td>&#8377;<span>${gross_amount}</span></td>
+  </tr>
+  <tr style="border-bottom: 1.5px solid black" />
+  <tr>
+    <td></td>
+    <td><b>Total</b></td>
+    <td><b>1</b></td>
+    <td>&#8377;<span >${gross_amount}</span></td>
+    <td>&#8377;<span >${tax_amount}</span></td>
+    <td>&#8377;<span >${gstAmount}</span></td>
+    <td>&#8377;<span >${gstAmount}</span></td>
+    <td>&#8377;<span>${gross_amount}</span></td>
+  </tr>
+</table>
+
+<div class="mt-3" style="border-top: 1.5px solid black" />
+
+<div class="row mt-3">
+  <div class="col-6">
+    <p>*Keep this invoice and manufacturer box for warranty purposes.</p>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col" style="font-size: 16px">Grand Total</div>
+      <div class="col">
+        <b style="font-size: 16px; text-align: right">&#8377;${gross_amount}</b>
+      </div>
+    </div>
+    <p class="mb-5" style="text-align: right">
+      Savadika Retail Private Limited
+    </p>
+    <br />
+    <br />
+    <br />
+    <p style="text-align: center">Authorized Signatory</p>
+  </div>
+</div>
+<div style="border-top: 1.5px solid black" />
+
+<div class="footer">
+  <p style="text-align: right">
+    <img src="./flipkart.png" alt="" width="75" height="75" />
+  </p>
+  <b>Returns Policy</b>
+  <span style="font-size: 10px">
+    : At Flipkart we try to deliver perfectly each and every time. But in
+    the off-chance that you need to return the item, please do so with the
+  </span>
+  <b>original Brand box/price tag, original packing and invoice</b>
+  <span style="font-size: 10px">
+    without which it will be really difficult for us to act on your request.
+    Please help us in helping you. Terms and conditions apply.
+  </span>
+  <p style="font-size: 10px">
+    The goods sold as are intended for end user consumption and not for
+    re-sale.
+  </p>
+  <p style="font-size: 10px">
+    Regd. office: Savadika Retail Private Limited , 406 B2 and C, 4th Floor,
+    Centrum Plaza, Golf Course Road, Sector-53, , GURGAON, HARYANA - 122001
+  </p>
+
+  Contact Flipkart: 1800 208 9898 || www.flipkart.com/helpcentre
+</div>`;
+
+        document.getElementById("body").innerHTML = htmlText;
+      }
+
+      form.addEventListener("submit", submitForm);
+    </script>
+  </body>
+</html>
